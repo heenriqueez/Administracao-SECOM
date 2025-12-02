@@ -1,0 +1,78 @@
+<h1>Agenda de Equipamentos</h1>
+<p>Visualize e gerencie as reservas de equipamentos da SECOM.</p>
+
+<div class="agenda-container">
+    <!-- Visualizador do Calendário -->
+    <div class="calendar-view form-container">
+        <div class="calendar-header">
+            <button id="prev-month-btn">&lt;</button>
+            <h2 id="month-year-header">Carregando...</h2>
+            <button id="next-month-btn">&gt;</button>
+        </div>
+        <div class="calendar-weekdays">
+            <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+        </div>
+        <div class="calendar-body" id="calendar-body">
+            <!-- Os dias do calendário serão gerados aqui -->
+        </div>
+    </div>
+
+    <!-- Área de Gerenciamento de Reservas -->
+    <div id="reservation-management-area" style="display: none;">
+        <!-- Nova Seção para colar texto do GLPI -->
+        <div class="form-container glpi-parser-container">
+            <h2>Registrar a partir do GLPI</h2>
+            <p>Cole o texto do chamado do GLPI abaixo e clique em "Processar" para preencher o formulário de reserva.</p>
+            <div class="input-group">
+                <label for="glpi-text-input">Texto do Chamado GLPI</label>
+                <textarea id="glpi-text-input" rows="10" placeholder="Cole o texto completo do chamado aqui..."></textarea>
+            </div>
+            <button id="process-glpi-btn" class="btn-secondary">Processar Texto</button>
+        </div>
+
+        <!-- Formulário para Adicionar Reserva Manualmente -->
+        <div class="form-container">
+            <h2>Adicionar Nova Reserva</h2>
+            <form id="add-reservation-form">
+                <div class="input-group"><label for="res-evento-nome">Nome do Evento</label><input type="text" id="res-evento-nome" required></div>
+                <div class="input-group"><label for="res-equipamento">Equipamento(s)</label><input type="text" id="res-equipamento" required></div>
+                <div class="input-group"><label for="res-responsavel">Nome do Solicitante</label><input type="text" id="res-responsavel" required></div>
+                <div class="input-group"><label for="res-unidade">Órgão/Unidade</label><input type="text" id="res-unidade"></div>
+                <div class="input-group"><label for="res-siape">SIAPE</label><input type="text" id="res-siape"></div>
+                <div class="input-group"><label for="res-email">E-mail</label><input type="email" id="res-email"></div>
+                <div class="input-group"><label for="res-telefone">Telefone</label><input type="tel" id="res-telefone"></div>
+                <div class="input-group"><label for="res-horario-contato">Horário de Contato</label><input type="text" id="res-horario-contato"></div>
+                <hr>
+                <div class="input-group"><label for="res-evento-local">Local do Evento</label><input type="text" id="res-evento-local"></div>
+                <div class="input-group"><label for="res-data-inicio">Início do Evento</label><input type="datetime-local" id="res-data-inicio" required></div>
+                <div class="input-group"><label for="res-data-fim">Fim do Evento</label><input type="datetime-local" id="res-data-fim" required></div>
+                <hr>
+                <div class="input-group"><label for="res-publico-tipo">Tipo de Público</label><input type="text" id="res-publico-tipo"></div>
+                <div class="input-group"><label for="res-verba-publica">Verba Pública Envolvida</label><input type="text" id="res-verba-publica"></div>
+                <hr>
+                <div class="input-group"><label for="res-retirada-datahora">Retirada na Secom</label><input type="datetime-local" id="res-retirada-datahora"></div>
+                <div class="input-group"><label for="res-devolucao-datahora">Devolução na Secom</label><input type="datetime-local" id="res-devolucao-datahora"></div>
+                <div class="input-group"><label for="res-montagem-datahora">Montagem dos Equipamentos</label><input type="datetime-local" id="res-montagem-datahora"></div>
+                <div class="input-group checkbox-group">
+                    <input type="checkbox" id="res-deseja-montagem">
+                    <label for="res-deseja-montagem">Deseja montagem dos equipamentos?</label>
+                </div>
+                <hr>
+                <div class="input-group"><label for="res-observacoes">Observações</label><textarea id="res-observacoes" rows="3"></textarea></div>
+                <button type="submit">Adicionar Reserva</button>
+                <p id="reservation-message" class="message"></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para detalhes do dia -->
+<div id="day-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2 id="modal-title">Reservas</h2>
+        <ul id="modal-reservation-list">
+            <!-- As reservas do dia serão listadas aqui -->
+        </ul>
+    </div>
+</div>

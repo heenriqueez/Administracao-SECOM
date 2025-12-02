@@ -1,0 +1,478 @@
+/* --- embed-style.css --- */
+/* Estilos dedicados para a visualização em iframe, otimizados para WordPress. */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+    --embed-font-family: 'Roboto', sans-serif;
+    --embed-primary-color: #1a202c;       /* Cinza bem escuro para texto */
+    --embed-secondary-color: #4A5568;     /* Cinza médio para texto secundário */
+    --embed-accent-color: #1240AB;        /* Nova cor principal solicitada */
+    --embed-background-color: #f7fafc;    /* Fundo de elementos, como cards */
+    --embed-border-color: #e2e8f0;       /* Cor da borda */
+    --embed-border-radius: 6px;
+    --embed-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+body.embedded-view, html {
+    font-family: var(--embed-font-family);
+    background-color: transparent; /* Essencial para WordPress */
+    color: var(--embed-primary-color);
+    margin: 0;
+    padding: 1rem; /* Um respiro nas bordas */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Estilos Gerais de Contêineres --- */
+h1, h2, p {
+    display: none; /* Oculta títulos e parágrafos por padrão no embed */
+}
+
+/* Exibe títulos específicos que são importantes para o conteúdo no iframe */
+.table-container h2,
+.folder-selection h2,
+.assinatura-container h2, /* Garante que o h2 do gerador de assinatura apareça */
+.gallery-view h2,
+.calendar-header h2 { display: block; font-size: 1.2rem; color: var(--embed-primary-color); margin-top: 0; margin-bottom: 1rem; }
+
+/* --- Estilos de Contêineres Gerais (form-container, table-container) --- */
+.form-container, .table-container {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: var(--embed-border-radius);
+    box-shadow: var(--embed-shadow);
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+/* --- Estilos de Input e Label --- */
+.input-group {
+    margin-bottom: 1rem;
+}
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--embed-secondary-color);
+}
+
+/* --- Lista de Arquivos (visualizar-arquivos) --- */
+#file-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+}
+
+#file-list li {
+    display: flex;
+    align-items: center;
+    background-color: var(--embed-background-color);
+    padding: 1rem;
+    border-radius: var(--embed-border-radius);
+    border: 1px solid var(--embed-border-color);
+    box-shadow: var(--embed-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#file-list li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+}
+
+#file-list li a {
+    text-decoration: none;
+    color: var(--embed-primary-color);
+    font-weight: 500;
+    flex-grow: 1;
+}
+
+#file-list li a::before {
+    content: '📄'; /* Ícone de arquivo genérico */
+    margin-right: 0.75rem;
+    font-size: 1.2em;
+}
+
+/* --- Estilos de Inputs Genéricos --- */
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group input[type="url"],
+.input-group input[type="password"],
+.input-group input[type="date"],
+.input-group input[type="time"],
+.input-group input[type="file"],
+.input-group select,
+.input-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--embed-border-color);
+    border-radius: var(--embed-border-radius);
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+    outline: none;
+    border-color: var(--embed-accent-color);
+    box-shadow: 0 0 0 3px rgba(18, 64, 171, 0.2); /* Cor do shadow ajustada para o novo accent */
+}
+
+/* --- Lista de Datas (calendario-academico) --- */
+#academic-dates-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+}
+
+.academic-calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: white;
+    border-radius: var(--embed-border-radius);
+    box-shadow: var(--embed-shadow);
+    overflow: hidden;
+}
+
+/* --- Tabela (calendario-formaturas) --- */
+.table-container .search-bar {
+    margin-bottom: 1.5rem;
+    /* display: none; Removido para que a barra de busca seja visível no iframe */
+}
+
+/* Estilos para a barra de busca nas tabelas */
+.table-container .search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+.table-container .search-bar input {
+    flex-grow: 1;
+    padding: 0.75rem 1rem; /* Mantém o padding genérico ou ajusta se necessário */
+}
+
+.table-container .search-bar button {
+    padding: 0.625rem 0.9375rem; /* Aproximadamente 10px 15px */
+    font-size: 0.9rem;
+}
+
+/* --- Estilos de Botões Genéricos --- */
+button, .btn {
+    background-color: var(--embed-accent-color);
+    color: white;
+    cursor: pointer;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--embed-border-radius);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.1s;
+}
+button:hover, .btn:hover {
+    background-color: #0e3180; /* Tom mais escuro do azul para hover */
+    transform: translateY(-1px);
+}
+button:disabled {
+    background-color: #cbd5e1; /* Cinza claro para desabilitado */
+    cursor: not-allowed;
+}
+.btn-secondary {
+    background-color: #e2e8f0;
+    color: var(--embed-secondary-color);
+}
+.table-container .btn-secondary:hover {
+    background-color: #cbd5e1;
+}
+
+/* --- Mensagens --- */
+.message, .no-results-message {
+    color: var(--embed-secondary-color);
+    margin-top: 1rem;
+}
+/* Layout para as tabelas de semestre no iframe */
+#semester-results-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que as tabelas quebrem para a linha de baixo em telas menores */
+    gap: 2rem;
+}
+#semester-1-container, #semester-2-container {
+    flex: 1;
+    min-width: 350px; /* Garante que as tabelas não fiquem muito espremidas */
+}
+
+
+
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--embed-border-color);
+}
+
+table th {
+    font-weight: 600;
+    color: var(--embed-secondary-color);
+    background-color: var(--embed-background-color);
+}
+
+table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+table tbody tr:hover {
+    background-color: #f0f4f8; /* Um tom mais claro para hover */
+}
+
+table tbody tr:nth-of-type(even) {
+    background-color: var(--embed-background-color);
+}
+
+/* --- Calendário (agenda-equipamentos) --- */
+.calendar-view {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: var(--embed-border-radius);
+    box-shadow: var(--embed-shadow);
+}
+.calendar-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem; /* Espaçamento entre os botões e o título */
+    margin-bottom: 1.5rem;
+}
+.calendar-header button {
+    background: transparent;
+    border: 1px solid var(--embed-border-color);
+    color: var(--embed-secondary-color);
+    padding: 0.5rem 1rem;
+    border-radius: var(--embed-border-radius);
+    cursor: pointer;
+}
+.calendar-header button:hover {
+    background-color: var(--embed-accent-color);
+    color: white;
+    border-color: var(--embed-accent-color);
+}
+.calendar-weekdays, .calendar-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.calendar-weekdays div {
+    text-align: center;
+    font-weight: 700;
+    color: var(--embed-secondary-color);
+    padding-bottom: 0.5rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.day {
+    border: 1px solid var(--embed-border-color);
+    min-height: 80px;
+    padding: 8px;
+}
+.day.today {
+    border-color: var(--embed-accent-color);
+    background-color: #eff6ff; /* Azul claro */
+}
+.day.has-reservations {
+    background-color: #1a5072; /* Tom de azul mais forte para destacar */
+    font-weight: 700;
+    color: var(--embed-accent-color);
+}
+.day.has-reservations:hover {
+    background-color: #135483; /* Tom mais escuro para o hover */
+    cursor: pointer;
+}
+
+
+/* --- Estilos do Modal (replicado do style.css, adaptado para embed) --- */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7); /* Fundo escuro para destacar o modal */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: var(--embed-border-radius);
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: var(--embed-shadow);
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--embed-primary-color); /* Cor do texto para o botão de fechar */
+}
+.modal-content h2,
+.modal-content p,
+.modal-content li {
+    display: block; /* Garante que o conteúdo dentro do modal seja visível */
+}
+
+
+
+.photo-modal-content .close-button {
+    color: white; /* Botão de fechar branco sobre o fundo escuro */
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    font-size: 40px;
+}
+
+#modal-photo-img {
+    max-width: 100%;
+    max-height: calc(90vh - 80px); /* Deixa espaço para o botão de download */
+    border-radius: var(--embed-border-radius);
+    margin-bottom: 20px;
+}
+
+
+/* --- Gerador de Assinatura --- */
+.assinatura-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 2rem;
+}
+.assinatura-container .form-container,
+.assinatura-container .preview-container {
+    flex: 1;
+    min-width: 320px;
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: var(--embed-border-radius);
+    box-shadow: var(--embed-shadow);
+}
+.assinatura-container h2 {
+    display: block;
+    font-size: 1.2rem;
+    color: var(--embed-primary-color);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+.assinatura-container .btn {
+    width: 100%;
+    background-color: var(--embed-accent-color);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-radius: var(--embed-border-radius);
+}
+
+/* --- Galeria de Fotos --- */
+.photo-gallery-container {
+    display: flex;
+    gap: 1.5rem;
+}
+.folder-selection {
+    background-color: transparent;
+    padding: 0;
+    box-shadow: none;
+    border-right: 1px solid var(--embed-border-color);
+    padding-right: 1.5rem;
+}
+.folder-selection h2 { display: block; font-size: 1.2rem; }
+.folder-selection ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.folder-selection li {
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: var(--embed-border-radius);
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid var(--embed-border-color);
+    box-shadow: var(--embed-shadow);
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+.folder-selection li:hover {
+    background-color: var(--embed-accent-color);
+    border-color: var(--embed-accent-color);
+    color: white;
+}
+.folder-selection li.active, .folder-selection li.active:hover {
+    background-color: var(--embed-accent-color);
+    border-color: var(--embed-accent-color);
+    color: white;
+    font-weight: 500;
+}
+.gallery-view {
+    flex-grow: 1;
+}
+.gallery-view h2 { display: block; font-size: 1.2rem; }
+
+.date-list li {
+    background-color: white;
+    border: 1px solid var(--embed-border-color);
+    box-shadow: var(--embed-shadow);
+}
+.date-list li:hover {
+    background-color: var(--embed-accent-color);
+    color: white;
+}
+
+#photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 1rem;
+}
+.photo-grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--embed-border-radius);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.photo-grid-item img:hover {
+    transform: scale(1.03);
+    box-shadow: var(--embed-shadow);
+}
+
+
+/* --- Loading Spinner --- */
+.loading-overlay {
+    background-color: rgba(255, 255, 255, 0.8);
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 10;
+}
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #d1d5db;
+    border-top-color: var(--embed-accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Oculta elementos de gerenciamento */
+.actions-column, .actions-cell, .btn-delete, .btn-delete-small {
+    display: none !important;
+}

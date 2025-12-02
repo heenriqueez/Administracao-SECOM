@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conteúdo SECOM</title>
+    <!-- Carrega apenas os estilos dedicados para a visualização em iframe -->
+    <link rel="stylesheet" href="../css/embed-style.css">
+</head>
+<body class="embedded-view">
+
+    <div class="content-area" id="content-area">
+        <!-- O conteúdo da página será carregado aqui -->
+        <p>Carregando...</p>
+    </div>
+
+    <!-- Overlay de Carregamento Global -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- SDKs do Firebase (necessários para algumas páginas) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+    <script>
+        // A configuração do seu app da Web do Firebase (cole aqui)
+        const firebaseConfig = __FIREBASE_CONFIG__; // Placeholder
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <!-- Scripts essenciais para o funcionamento das páginas -->
+    <script src="../js/config.js"></script>
+    <script>
+        window.isEmbeddedContext = true; // Sinalizador para o modo iframe
+
+        // --- SISTEMA DE CACHE (replicado do main.js) ---
+        const apiCache = new Map();
+        function clearCache(key) {
+            apiCache.delete(key);
+        }
+
+        // Define a função callApi e o objeto 'user' para que os scripts das páginas funcionem
+        const user = JSON.parse(sessionStorage.getItem('user')) || {};
+
+        function callApi(action, data = {}) {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const requestBody = { action, userRole: user.role, ...data };
+
+            if (loadingOverlay) loadingOverlay.style.display = 'flex';
+
+            return fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(requestBody),
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+            })
+            .then(response => response.text())
+            .then(text => JSON.parse(text))
+            .finally(() => {
+                if (loadingOverlay) loadingOverlay.style.display = 'none';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const contentArea = document.getElementById('content-area');
+            const params = new URLSearchParams(window.location.search);
+            const pageName = params.get('page');
+
+            if (pageName) {
+                // 1. Carrega o HTML da página
+                fetch(`${pageName}.html`) // Caminho corrigido: busca na mesma pasta
+                    .then(response => response.ok ? response.text() : Promise.reject('Página não encontrada.'))
+                    .then(html => {
+                        contentArea.innerHTML = html;
+
+                        // Mapeia o nome da página para a função de inicialização correspondente
+                        const initFunctions = {
+                            'dashboard': window.initDashboard,
+                            'visualizar-arquivos': window.initVisualizarArquivos,
+                            'mapeamento-processos': window.initMapeamentoProcessos,
+                            'gerador-assinatura': window.initGeradorAssinatura,
+                            'agenda-equipamentos': window.initAgendaEquipamentos,
+                            'calendario-formaturas': window.initCalendarioFormaturas,
+                            'calendario-academico': window.initCalendarioAcademico,
+                            'fotos-colacao': window.initFotosColacao,
+                            'gerenciar-usuarios': window.initGerenciarUsuarios
+                        };
+
+                        // Chama a função de inicialização se ela existir
+                        if (typeof initFunctions[pageName] === 'function') {
+                            initFunctions[pageName]();
+                        } else {
+                            console.warn(`Função de inicialização para ${pageName} não encontrada.`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao carregar a página:', error);
+                        contentArea.innerHTML = `<p>O conteúdo solicitado não pôde ser carregado.</p>`;
+                    });
+            } else {
+                contentArea.innerHTML = `<p>Nenhuma página especificada.</p>`;
+            }
+        });
+    </script>
+
+    <!-- Carrega todos os scripts das páginas para que suas funções de inicialização estejam disponíveis -->
+    <script src="../js/dashboard.js" defer></script>
+    <script src="../js/visualizar-arquivos.js" defer></script>
+    <script src="../js/mapeamento-processos.js" defer></script>
+    <script src="../js/gerador-assinatura.js" defer></script>
+    <script src="../js/agenda-equipamentos.js" defer></script>
+    <script src="../js/calendario-formaturas.js" defer></script>
+    <script src="../js/calendario-academico.js" defer></script>
+    <script src="../js/fotos-colacao.js" defer></script>
+    <script src="../js/gerenciar-usuarios.js" defer></script>
+</body>
+</html>

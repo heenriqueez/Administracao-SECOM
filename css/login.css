@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Adlam+Display&family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+    --font-heading: 'Adlam Display', cursive;
+    --font-body: 'Roboto', sans-serif;
+
+    --color-primary: #0A2540; /* Azul escuro profundo */
+    --color-secondary: #F6F9FC; /* Fundo principal (quase branco) */
+    --color-accent: #009688; /* Teal para destaque */
+    --color-accent-hover: #00796b;
+    --color-text: #334155; /* Cinza escuro para texto */
+    --color-text-light: #64748B;
+    --color-border: #E2E8F0;
+    --color-white: #FFFFFF;
+    --color-error: #EF4444;
+
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --border-radius: 8px;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: var(--font-body);
+    background-color: var(--color-secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-text);
+}
+
+.login-container {
+    width: 100%;
+    padding: 20px;
+}
+
+.login-box {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: var(--color-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+}
+
+.login-box .login-logo {
+    max-width: 180px;
+    margin-bottom: 15px;
+}
+
+.login-box p {
+    color: var(--color-text-light);
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.input-group input {
+    width: 90%;
+    padding: 12px 15px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(0, 150, 136, 0.2);
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.remember-me input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+#login-button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#login-button:hover {
+    background-color: var(--color-accent-hover);
+}
+
+#login-button:disabled {
+    background-color: #94A3B8;
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: var(--color-error);
+    margin-top: 15px;
+    font-weight: 500;
+    min-height: 1.2em; /* Evita que o layout pule quando a mensagem aparece */
+}

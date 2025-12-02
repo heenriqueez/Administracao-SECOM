@@ -1,0 +1,19 @@
+/* Estilos para o conteúdo incorporado via iframe */
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: transparent; /* Fundo transparente para se mesclar ao site pai */
+}
+
+.content-area {
+    padding: 0; /* Remove o padding da área principal para o conteúdo ocupar todo o espaço */
+}
+
+/* 
+  Oculta os títulos e parágrafos introdutórios que são filhos diretos 
+  da área de conteúdo, mas apenas no modo iframe.
+*/
+.content-area > h1,
+.content-area > p {
+    display: none;
+}

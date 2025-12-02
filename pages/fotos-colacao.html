@@ -1,0 +1,46 @@
+<h1>Fotos da Colação de Grau</h1>
+<p>Adicione e visualize as galerias de fotos das colações de grau.</p>
+
+<!-- Área de Gerenciamento (visível apenas para administradores) -->
+<div id="gallery-management-area" class="form-container" style="display: none;">
+    <h2>Adicionar Nova Galeria</h2>
+    <form id="add-gallery-form">
+        <div class="input-group">
+            <label for="gallery-name">Nome da Turma/Galeria (Ex: Direito 2024/2)</label>
+            <input type="text" id="gallery-name" required>
+        </div>
+        <div class="input-group">
+            <label for="gallery-url">Link da Pasta do Google Drive</label>
+            <input type="url" id="gallery-url" required placeholder="Cole o link da pasta principal da turma">
+        </div>
+        <button type="submit">Adicionar Galeria</button>
+        <p id="gallery-message" class="message"></p>
+    </form>
+</div>
+
+<!-- Área de Visualização -->
+<div class="photo-gallery-container">
+    <div class="folder-selection">
+        <h2>Turmas</h2>
+        <ul id="photo-folders-list">
+            <!-- As galerias serão carregadas aqui -->
+        </ul>
+    </div>
+    <div class="gallery-view">
+        <h2 id="gallery-title">Selecione uma turma para ver as fotos</h2>
+        <div id="photo-grid">
+            <!-- As fotos da galeria selecionada aparecerão aqui -->
+        </div>
+    </div>
+</div>
+
+<!-- Modal para visualização de fotos -->
+<div id="photo-modal" class="modal" style="display: none;">
+    <div class="photo-modal-content">
+        <span class="close-button">&times;</span>
+        <button class="modal-nav prev-btn">&lt;</button>
+        <img id="modal-photo-img" src="" alt="Foto em tamanho grande">
+        <button class="modal-nav next-btn">&gt;</button>
+        <a id="download-photo-btn" class="btn" href="#" download>Baixar Foto</a>
+    </div>
+</div>

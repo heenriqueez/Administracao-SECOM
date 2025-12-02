@@ -1,0 +1,32 @@
+<h1>Calendário Acadêmico</h1>
+<p>Visualize as principais datas do calendário acadêmico vigente.</p>
+
+<!-- Área de Gerenciamento (visível apenas para administradores) -->
+<div id="calendar-management-area" class="form-container" style="display: none;">
+    <h2>Atualizar Calendário</h2>
+    <p>Faça o upload do arquivo PDF do Calendário Acadêmico. A IA irá processar o documento e extrair as datas mais importantes.</p>
+    
+    <div class="input-group">
+        <label for="calendar-file-upload">Selecionar arquivo PDF</label>
+        <input type="file" id="calendar-file-upload" accept="application/pdf">
+    </div>
+    <button id="calendar-upload-button" class="btn">Analisar e Atualizar Calendário</button>
+    <p id="calendar-upload-message" class="message"></p>
+</div>
+
+<!-- Área de Visualização das Datas -->
+<div id="calendar-view-container" class="table-container">
+    <h2>Visualizar Calendário</h2>
+    <div class="calendar-filters">
+        <div class="input-group">
+            <label for="year-selector">Selecione o Ano</label>
+            <select id="year-selector"></select>
+        </div>
+        <div class="input-group" id="category-filter-group" style="display: none;">
+            <label for="category-selector">Filtrar por Categoria</label>
+            <select id="category-selector"></select>
+        </div>
+    </div>
+    <ul id="academic-dates-list" class="styled-list">
+    </ul>
+</div>

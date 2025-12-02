@@ -1,0 +1,71 @@
+<h1>Calendário Acadêmico</h1>
+<p>Visualize e gerencie as datas e prazos importantes do calendário acadêmico da UFJ.</p>
+
+<!-- Área de Gerenciamento (Upload, Adicionar Evento) -->
+<div id="calendar-management-area" class="form-container" style="display: none;">
+    <h2>Gerenciar Calendário</h2>
+    <div class="input-group">
+        <label for="calendar-file-upload">Atualizar com PDF</label>
+        <input type="file" id="calendar-file-upload" accept=".pdf">
+        <button id="calendar-upload-button">Analisar e Atualizar</button>
+        <p id="calendar-upload-message" class="message"></p>
+    </div>
+    <hr>
+    <button id="add-event-button" class="btn" style="display: none;">Adicionar Novo Evento</button>
+</div>
+
+<!-- Área de Visualização -->
+<div class="table-container">
+    <div class="filters">
+        <div class="input-group">
+            <label for="year-selector">Selecione o Ano</label>
+            <select id="year-selector">
+                <option>Carregando...</option>
+            </select>
+        </div>
+        <div class="input-group" id="category-filter-group" style="display: none;">
+            <label for="category-selector">Filtrar por Categoria</label>
+            <select id="category-selector">
+                <option value="all">Todas as Categorias</option>
+            </select>
+        </div>
+    </div>
+    <div id="academic-dates-list">
+        <p>Selecione um ano para visualizar as datas.</p>
+    </div>
+</div>
+
+<!-- Modal para Adicionar/Editar Evento -->
+<div id="event-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2 id="modal-title">Adicionar Novo Evento</h2>
+        <form id="event-modal-form">
+            <input type="hidden" id="event-index">
+            <div class="input-group">
+                <label for="event-date">Data (para ordenação - AAAA-MM-DD)</label>
+                <input type="date" id="event-date" required>
+            </div>
+            <div class="input-group">
+                <label for="event-display-date">Texto da Data (Ex: 01 a 05, 15/01/2025)</label>
+                <input type="text" id="event-display-date" required>
+            </div>
+            <div class="input-group">
+                <label for="event-description">Descrição do Evento</label>
+                <textarea id="event-description" rows="4" required></textarea>
+            </div>
+            <div class="input-group">
+                <label for="event-category">Categoria</label>
+                <select id="event-category" required>
+                    <option value="matriculas_ajustes">Matrículas e Ajustes</option>
+                    <option value="prazos_academicos">Prazos Acadêmicos e Administrativos</option>
+                    <option value="aulas_recessos_feriados">Aulas, Recessos e Feriados</option>
+                    <option value="editais_processos_seletivos">Editais e Processos Seletivos</option>
+                    <option value="eventos_institucionais">Eventos Institucionais</option>
+                    <option value="outros" selected>Outros</option>
+                </select>
+            </div>
+            <button type="submit">Salvar Alterações</button>
+        </form>
+    </div>
+</div>

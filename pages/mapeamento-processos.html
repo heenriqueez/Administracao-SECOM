@@ -1,0 +1,20 @@
+<h1>Mapeamento de Processos</h1>
+<p>Visualize abaixo o fluxograma atual de processos da SECOM.</p>
+
+<!-- Área de Gerenciamento (visível apenas para a diretora) -->
+<div id="map-management-area" class="form-container" style="display: none;">
+    <h2>Atualizar Mapa de Processos</h2>
+    <p>Faça o upload de um novo arquivo (imagem ou PDF) para substituir o mapa atual.</p>
+    
+    <div class="input-group">
+        <label for="map-file-upload">Selecionar novo arquivo</label>
+        <input type="file" id="map-file-upload" accept="image/*,application/pdf">
+    </div>
+    <button id="map-upload-button">Atualizar Mapa</button>
+    <p id="map-upload-message" class="message"></p>
+</div>
+
+<div id="map-viewer" class="map-viewer-container">
+    <!-- O mapa (imagem ou PDF) será carregado aqui -->
+    <p>Carregando mapa de processos...</p>
+</div>

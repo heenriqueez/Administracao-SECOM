@@ -1,0 +1,41 @@
+<h1>Calendário de Cerimônias de Formatura</h1>
+<p>Visualize e gerencie as datas das cerimônias de formatura.</p>
+
+<!-- Área de Gerenciamento (visível para admin/funcionário) -->
+<div id="formatura-management-area" class="form-container" style="display: none;">
+    <h2>Adicionar Nova Data de Formatura</h2>
+    <form id="add-formatura-form">
+        <div class="input-group"><label for="form-data">Data</label><input type="date" id="form-data" required></div>
+        <div class="input-group"><label for="form-local">Local</label><input type="text" id="form-local" required></div>
+        <div class="input-group"><label for="form-cursos">Cursos (um por linha)</label><textarea id="form-cursos" rows="4" required></textarea></div>
+        <button type="submit">Adicionar Data</button>
+        <p id="formatura-message" class="message"></p>
+    </form>
+</div>
+
+<div class="table-container">
+    <h2>Datas Agendadas</h2>
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Buscar por ano (ex: 2025)">
+        <button id="search-button" class="btn">Buscar</button>
+        <button id="clear-search-button" class="btn btn-secondary" style="display:none;">Limpar Busca</button>
+    </div>
+
+    <div id="semester-results-container" style="display: none;">
+        <div id="semester-1-container" class="table-container" style="display: none;">
+            <h2>1º Semestre</h2>
+            <table id="semester-1-table">
+                <!-- Cabeçalho e corpo serão preenchidos via JS -->
+            </table>
+        </div>
+        <div id="semester-2-container" class="table-container" style="display: none;">
+            <h2>2º Semestre</h2>
+            <table id="semester-2-table">
+                <!-- Cabeçalho e corpo serão preenchidos via JS -->
+            </table>
+        </div>
+        <div id="no-semester-results" class="message" style="display: none;">
+            Nenhuma data encontrada para este ano.
+        </div>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Administração - SECOM/UFJ</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="./assets/SECOM-assinatura-negativa.png" alt="Logo SECOM" class="sidebar-logo">
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <!-- 
+                  O atributo 'data-page' corresponde ao nome do arquivo em /pages sem a extensão .html 
+                  Isso será usado pelo JavaScript para carregar o conteúdo correto.
+                -->
+                <li><a href="#" class="nav-link active" data-page="dashboard">Dashboard</a></li>
+                <li><a href="#" class="nav-link" data-page="visualizar-arquivos">Visualizar Arquivos</a></li>
+                <li><a href="#" class="nav-link" data-page="mapeamento-processos">Mapeamento de Processos</a></li>
+                <li><a href="#" class="nav-link" data-page="gerador-assinatura">Gerador de Assinatura</a></li>
+                <li><a href="#" class="nav-link" data-page="agenda-equipamentos">Agenda de Equipamentos</a></li>
+                <li><a href="#" class="nav-link" data-page="calendario-formaturas">Calendário de Formaturas</a></li>
+                <li><a href="#" class="nav-link" data-page="calendario-academico">Calendário Acadêmico</a></li>
+                <li><a href="#" class="nav-link" data-page="fotos-colacao">Fotos da Colação de Grau</a></li>
+                <li><a href="#" class="nav-link" data-page="gerenciar-usuarios">Gerenciar Usuários</a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-profile-summary" id="sidebar-user-profile">
+                <!-- As informações do usuário (foto, nome, sair) serão injetadas aqui pelo JavaScript -->
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="nav-link" data-page="perfil">Meu Perfil</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <header class="main-header">
+            <div class="header-left">
+                <h1>Bem-vindo ao Painel</h1>
+                <button id="copy-embed-link-btn" class="btn btn-secondary" style="display: none;">Copiar Link para
+                    Iframe</button>
+            </div>
+            <div class="user-info" id="user-info-container"></div>
+        </header>
+        <div class="content-area" id="content-area">
+            <!-- O conteúdo das páginas será carregado aqui via JavaScript -->
+        </div>
+    </main>
+
+    <!-- SDKs do Firebase (necessários para upload de arquivos) -->
+    <!-- Substitua com a configuração do seu projeto Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+    <script>
+        const firebaseConfig = __FIREBASE_CONFIG__; // Placeholder
+
+        // Inicializa o Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script src="js/config.js"></script>
+    <!-- Carrega todos os scripts das páginas para que suas funções de inicialização estejam disponíveis -->
+    <script src="js/dashboard.js" defer></script>
+    <script src="js/visualizar-arquivos.js" defer></script>
+    <script src="js/mapeamento-processos.js" defer></script>
+    <script src="js/gerador-assinatura.js" defer></script>
+    <script src="js/agenda-equipamentos.js" defer></script>
+    <script src="js/calendario-formaturas.js" defer></script>
+    <script src="js/calendario-academico.js" defer></script>
+    <script src="js/fotos-colacao.js" defer></script>
+    <script src="js/gerenciar-usuarios.js" defer></script>
+    <script src="js/perfil.js" defer></script>
+    <script src="js/main.js"></script>
+
+    <!-- Overlay de Carregamento Global -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+</body>
+
+</html>

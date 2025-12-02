@@ -1,0 +1,55 @@
+<h1>Meu Perfil</h1>
+<p>Gerencie suas informações pessoais e configurações de segurança.</p>
+
+<div class="profile-container">
+    <!-- Seção de Foto do Perfil -->
+    <div class="form-container profile-photo-section">
+        <h2>Foto do Perfil</h2>
+        <div class="photo-preview-container">
+            <img id="profile-photo-preview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150' fill='%23CBD5E1'%3E%3Ccircle cx='75' cy='75' r='75'/%3E%3Cpath d='M75 93.75c-9.33 0-16.88 7.54-16.88 16.88v1.88h33.75v-1.88c0-9.34-7.54-16.88-16.88-16.88zm0-41.25c-9.33 0-16.88 7.54-16.88 16.88s7.54 16.88 16.88 16.88 16.88-7.54 16.88-16.88-7.54-16.88-16.88-16.88z' fill='%23F8FAFC'/%3E%3C/svg%3E" alt="Foto do Perfil" class="profile-photo-preview">
+        </div>
+        <div class="input-group">
+            <label for="photo-upload">Alterar foto</label>
+            <input type="file" id="photo-upload" accept="image/*">
+        </div>
+        <button id="save-photo-btn" disabled>Salvar Foto</button>
+        <p id="photo-message" class="message"></p>
+    </div>
+
+    <!-- Seção de Informações e Senha -->
+    <div class="profile-details-section">
+        <!-- Alterar Nome -->
+        <div class="form-container">
+            <h2>Informações Pessoais</h2>
+            <form id="update-name-form">
+                <div class="input-group">
+                    <label for="user-name">Nome Completo</label>
+                    <input type="text" id="user-name" name="name" required>
+                </div>
+                <div class="input-group">
+                    <label for="user-email">Email (não pode ser alterado)</label>
+                    <input type="email" id="user-email" name="email" readonly disabled>
+                </div>
+                <button type="submit">Salvar Nome</button>
+                <p id="name-message" class="message"></p>
+            </form>
+        </div>
+
+        <!-- Alterar Senha -->
+        <div class="form-container">
+            <h2>Alterar Senha</h2>
+            <form id="update-password-form">
+                <div class="input-group">
+                    <label for="current-password">Senha Atual</label>
+                    <input type="password" id="current-password" name="currentPassword" required>
+                </div>
+                <div class="input-group">
+                    <label for="new-password">Nova Senha</label>
+                    <input type="password" id="new-password" name="newPassword" required>
+                </div>
+                <button type="submit">Alterar Senha</button>
+                <p id="password-message" class="message"></p>
+            </form>
+        </div>
+    </div>
+</div>

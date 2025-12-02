@@ -1,0 +1,38 @@
+<h1>Gerenciar Usuários</h1>
+<p>Adicione, remova ou altere o cargo dos usuários do sistema.</p>
+
+<!-- Formulário para criar um novo usuário -->
+<div class="form-container">
+    <h2>Criar Novo Usuário</h2>
+    <form id="create-user-form">
+        <div class="input-group">
+            <label for="new-user-name">Nome Completo</label>
+            <input type="text" id="new-user-name" name="name" required>
+        </div>
+        <div class="input-group">
+            <label for="new-user-email">Email Institucional</label>
+            <input type="email" id="new-user-email" name="email" required placeholder="ex: nome.sobrenome@ufj.edu.br">
+        </div>
+        <button type="submit" id="create-user-button">Criar Usuário</button>
+        <p id="create-user-message" class="message"></p>
+    </form>
+</div>
+
+<!-- Tabela para listar e gerenciar usuários existentes -->
+<div class="table-container">
+    <h2>Usuários Cadastrados</h2>
+    <p id="user-update-message" class="message"></p> <!-- Elemento adicionado para mensagens de atualização -->
+    <table id="users-table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Cargo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- As linhas dos usuários serão inseridas aqui pelo JavaScript -->
+        </tbody>
+    </table>
+</div>

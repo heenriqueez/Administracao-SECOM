@@ -1,0 +1,40 @@
+<h1>Visualizar Arquivos</h1>
+<p>Gerencie e visualize os arquivos importantes da SECOM.</p>
+
+<!-- Área de Gerenciamento de Arquivos (visível apenas para administradores) -->
+<div id="file-management-area" class="form-container" style="display: none;">
+    <h2>Fazer Upload de Arquivo</h2>
+    <form id="file-upload-form">
+        <div class="input-group">
+            <label for="file-name">Nome do Documento</label>
+            <input type="text" id="file-name" name="name" required placeholder="Ex: Edital de Seleção 2024">
+        </div>
+        <div class="input-group">
+            <label for="file-upload">Selecionar Arquivo</label>
+            <input type="file" id="file-upload" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png" required>
+        </div>
+        <button type="submit" id="upload-button">Fazer Upload</button>
+        <p id="upload-message" class="message"></p>
+    </form>
+</div>
+
+<!-- Área de Visualização de Arquivos -->
+<div class="table-container">
+    <h2>Arquivos Disponíveis</h2>
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Buscar por nome do arquivo...">
+        <button id="search-button">Buscar</button>
+        <button id="clear-search-button" class="btn-secondary" style="display: none;">Limpar</button>
+    </div>
+    <ul id="file-list">
+        <!-- Os arquivos serão carregados aqui pelo JavaScript -->
+    </ul>
+</div>
+
+<!-- Modal para visualização de PDF (se necessário) -->
+<div id="pdf-viewer-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <iframe id="pdf-viewer-iframe" width="100%" height="500px" frameborder="0"></iframe>
+    </div>
+</div>

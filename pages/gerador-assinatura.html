@@ -1,0 +1,50 @@
+<h1>Gerador de Assinatura de E-mail</h1>
+<p>Preencha os campos abaixo para criar sua assinatura de e-mail personalizada e clique em "Copiar Assinatura".</p>
+
+<div class="assinatura-container">
+    <div class="form-container">
+        <h2>Dados da Assinatura</h2>
+        <div class="input-group">
+            <label for="nomeInput">Nome Completo</label>
+            <input id="nomeInput" placeholder="Seu Nome Completo">
+        </div>
+        <div class="input-group">
+            <label for="vinculoInput">Vínculo</label>
+            <input id="vinculoInput" placeholder="Ex: Docente, Técnico Administrativo">
+        </div>
+        <div class="input-group">
+            <label for="vinculo2Input">Outro Vínculo (Opcional)</label>
+            <input id="vinculo2Input" placeholder="Ex: Coordenador de Curso">
+        </div>
+        <div class="input-group">
+            <label for="deptoInput">Setor/Unidade (Opcional)</label>
+            <input id="deptoInput" placeholder="Ex: SECOM, Instituto de Ciências...">
+        </div>
+
+        <button id="copyButton">Copiar Assinatura</button>
+    </div>
+
+    <div class="preview-container">
+        <h2>Pré-visualização</h2>
+        <div class="assinatura-preview">
+            <table id="assinatura" style="color: rgb(51, 51, 51);">
+                <tbody>
+                    <tr>
+                        <td width="100px" style="border-right:1px solid rgb(221,221,221); padding-right:20px; vertical-align: top;">
+                            <img src="https://files.cercomp.ufg.br/weby/up/464/o/ufj-assinatura-email.png" alt="Logo da UFJ" width="100">
+                        </td>
+                        <td style="padding-left:20px; line-height: 1.2; vertical-align: top;">
+                            <span id="previewNome" style="font-size:1rem; color:rgb(44,62,80); font-weight:bold;">Nome</span><br>
+                            <div id="previewVinculoWrapper" style="display: none;"><span id="previewVinculo" style="font-size:0.8rem; line-height: 1.2rem;">Vínculo</span><br></div>
+                            <div id="previewVinculo2Wrapper" style="display: none;"><span id="previewVinculo2" style="font-size:0.8rem; line-height: 1.2rem;">Outro Vínculo</span><br></div>
+                            <div id="previewDeptoWrapper" style="display: none;"><span id="previewDepto" style="font-size:0.8rem; line-height: 1.2rem;">Departamento</span><br></div>
+                            <div style="height: 10px;"></div>
+                            <span style="font-size:0.8rem; font-weight:bold;">Universidade Federal de Jataí</span><br>
+                            <a href="http://ufj.edu.br" style="font-size:0.8rem; color:rgb(44,62,80); text-decoration-line:none" target="_blank">http://ufj.edu.br</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
