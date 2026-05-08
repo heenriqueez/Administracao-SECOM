@@ -94,6 +94,8 @@ function doPost(e) {
     }
 
     switch (action) {
+      case 'getFirebaseConfig':
+        return handleGetFirebaseConfig();
       case 'login':
         return handleLogin(requestBody.email, requestBody.password);
       case 'forgotPassword':
@@ -189,6 +191,21 @@ function doOptions(e) {
 
 
 // --- Handlers de Autenticação e Usuários (Firebase) ---
+
+/**
+ * Retorna a configuração pública do Firebase.
+ * Mantém as chaves fora do repositório GitHub, guardadas no Google.
+ */
+function handleGetFirebaseConfig() {
+  // Cole aqui suas chaves reais do Firebase
+  const config = {
+    apiKey: "SUA_API_KEY",
+    authDomain: "SEU_PROJETO.firebaseapp.com",
+    projectId: "SEU_PROJETO",
+    storageBucket: "SEU_PROJETO.appspot.com"
+  };
+  return returnJsonResponse({ status: 'success', data: config });
+}
 
 /**
  * Lida com a requisição de login.

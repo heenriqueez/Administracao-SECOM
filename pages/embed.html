@@ -19,17 +19,29 @@
         <div class="spinner"></div>
     </div>
 
+    <!-- Scripts essenciais contendo a variável SCRIPT_URL -->
+    <script src="../js/config.js"></script>
+
     <!-- SDKs do Firebase (necessários para algumas páginas) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
     <script>
-        // A configuração do seu app da Web do Firebase (cole aqui)
-        const firebaseConfig = __FIREBASE_CONFIG__; // Placeholder
-        firebase.initializeApp(firebaseConfig);
+        // Busca a configuração do Firebase de forma segura pelo backend (Google Apps Script)
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify({ action: 'getFirebaseConfig' }),
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+        })
+        .then(response => response.text())
+        .then(text => {
+            const result = JSON.parse(text);
+            if (result.status === 'success' && result.data.apiKey !== "SUA_API_KEY") {
+                firebase.initializeApp(result.data);
+            }
+        })
+        .catch(err => console.error("Erro ao buscar Firebase config:", err));
     </script>
 
-    <!-- Scripts essenciais para o funcionamento das páginas -->
-    <script src="../js/config.js"></script>
     <script>
         window.isEmbeddedContext = true; // Sinalizador para o modo iframe
 

@@ -63,10 +63,18 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
     <script>
-        const firebaseConfig = __FIREBASE_CONFIG__; // Placeholder
+        // O Web SDK do Firebase exige que essas chaves sejam públicas no frontend.
+        // A segurança real é feita pelas Regras de Segurança no painel do Firebase.
+        const firebaseConfig = {
+            // apiKey: "SUA_API_KEY",
+            // authDomain: "SEU_PROJETO.firebaseapp.com",
+            // projectId: "SEU_PROJETO",
+            // storageBucket: "SEU_PROJETO.appspot.com",
+        };
 
-        // Inicializa o Firebase
-        firebase.initializeApp(firebaseConfig);
+        if (Object.keys(firebaseConfig).length > 0) {
+            firebase.initializeApp(firebaseConfig);
+        }
     </script>
 
     <script src="js/config.js"></script>
