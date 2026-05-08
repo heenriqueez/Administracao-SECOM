@@ -233,7 +233,7 @@ function handleGlpiTextParsing() {
         document.getElementById('res-retirada-datahora').value = parsedData.retiradaDataHora;
         document.getElementById('res-devolucao-datahora').value = parsedData.devolucaoDataHora;
         document.getElementById('res-montagem-datahora').value = parsedData.montagemDataHora;
-        document.getElementById('res-deseja-montagem').checked = parsedData.desejaMontagem.toLowerCase() === 'sim';
+        document.getElementById('res-deseja-montagem').checked = parsedData.desejaMontagem?.toLowerCase() === 'sim';
         document.getElementById('res-observacoes').value = parsedData.observacoes;
 
         alert('Formulário preenchido! Verifique os dados e clique em "Adicionar Reserva" para confirmar.');
@@ -246,55 +246,72 @@ function handleGlpiTextParsing() {
  * @returns {object} Um objeto com os dados extraídos.
  */
 function parseGlpiText(text) {
-    // Função auxiliar para extrair valor com base em uma regex de chave
-    const extractValue = (keyRegex) => {
-        const match = text.replace(/\r\n/g, '\n').match(keyRegex);
-        // Se encontrou, pega o texto após '::' ou ':' e remove espaços extras.
-        // A regex captura o texto até o final da linha ou até a próxima linha que começa com um padrão de chave.
-        return match && match[1] ? match[1].replace(/\n/g, ' ').trim() : '';
+    // Normaliza quebras de linha
+    const normalizedText = text.replace(/\r\n/g, '\n');
+
+    // Lookahead que define onde o valor atual deve parar de ser capturado.
+    // Para quando encontrar uma nova linha com "numero)", ou os títulos conhecidos do formulário GLPI.
+    const stopPattern = '(?=\\n\\s*\\d+\\)|\\nInformações|\\nPúblico|\\nRecursos|\\nLogística|\\nObservações|$)';
+
+    // Função auxiliar para extrair o valor de forma dinâmica e segura
+    const extractValue = (keyRegexString) => {
+        const regex = new RegExp(`\\b${keyRegexString}\\s*:{1,2}\\s*([\\s\\S]*?)${stopPattern}`, 'i');
+        const match = normalizedText.match(regex);
+        return match && match[1] ? match[1].trim() : '';
     };
 
     // Função para extrair e formatar data e hora para datetime-local
-    const extractDateTime = (keyRegex) => {
-        const match = text.match(keyRegex);
-        if (!match || !match[1]) return '';
-        // Converte 'AAAA-MM-DD HH:mm' para 'AAAA-MM-DDTHH:mm'
-        return match[1].trim().replace(' ', 'T');
+    const extractDateTime = (keyRegexString) => {
+        const rawDate = extractValue(keyRegexString);
+        if (!rawDate) return '';
+        
+        // Converte formato do GLPI (DD-MM-YYYY HH:mm) para o padrão internacional do HTML (YYYY-MM-DDTHH:mm)
+        const dateMatch = rawDate.match(/(\d{2})-(\d{2})-(\d{4})\s+(\d{2}:\d{2})/);
+        if (dateMatch) {
+            return `${dateMatch[3]}-${dateMatch[2]}-${dateMatch[1]}T${dateMatch[4]}`;
+        }
+        
+        // Fallback
+        return rawDate.replace(' ', 'T');
     };
 
-    // Extrai os dados usando regex flexíveis
-    const responsavel = extractValue(/\bNome do Solicitante\s*:{1,2}\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-ZÀ-Ú\s/]+:{1,2}|$)/i);
-    const unidade = extractValue(/Órgão\/Unidade solicitante\s*:{1,2}\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-ZÀ-Ú\s/]+:{1,2}|$)/i);
-    const siape = extractValue(/\bSIAPE\s*:{1,2}\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-Z\s]+:{1,2}|$)/i);
-    const email = extractValue(/\bE-mail\s*:{1,2}\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-Z\s]+:{1,2}|$)/i);
-    const telefone = extractValue(/\bTelefone para contato\s*:{1,2}\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-Z\s]+:{1,2}|$)/i);
-    const horarioContato = extractValue(/\bPreferencia de horário para a equipe entrar em contato\s*:{1,2}\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-Z\s]+:{1,2}|$)/i);
-    const eventoNome = extractValue(/\bNome da atividade\/evento\s*:{1,2}\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-Z\s]+:{1,2}|$)/i);
-    const eventoLocal = extractValue(/\bLocal do evento \/ Destino do material\s*:{1,2}\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-Z\s]+:{1,2}|$)/i);
+    const responsavel = extractValue('Nome do Solicitante');
+    const unidade = extractValue('Órgão/Unidade solicitante');
+    const siape = extractValue('SIAPE');
+    const email = extractValue('E-mail');
+    const telefone = extractValue('Telefone para contato');
+    const horarioContato = extractValue('Preferencia de horário para a equipe entrar em contato');
+    
+    const eventoNome = extractValue('Nome da atividade/evento');
+    const eventoLocal = extractValue('Local do evento / Destino do material');
 
-    const dataInicio = extractDateTime(/\bData e horário de in[ií]cio\s*:\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-Z\s]+:{1,2}|$)/i);
-    const dataFim = extractDateTime(/\bData e horário de t[eé]rmino\s*:\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-Z\s]+:{1,2}|$)/i);
-    const publicoTipo = extractValue(/\bTipo de público\s*:{1,2}\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-Z\s]+:{1,2}|$)/i);
-    const verbaPublica = extractValue(/\bEspecifique qual\?\s*:{1,2}\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-Z\s]+:{1,2}|$)/i);
+    const dataInicio = extractDateTime('Data e horário de in[ií]cio');
+    const dataFim = extractDateTime('Data e horário de t[eé]rmino');
+    
+    const publicoTipo = extractValue('Tipo de público');
+    const verbaPublica = extractValue('Especifique qual\\?');
 
-    const retiradaDataHora = extractDateTime(/\bData e horário da retirada na Secom\s*:{1,2}\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-Z\s]+:{1,2}|$)/i);
-    const devolucaoDataHora = extractDateTime(/\bData e horário da devoluç[ãa]o na Secom\s*:{1,2}\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-Z\s]+:{1,2}|$)/i);
-    const montagemDataHora = extractDateTime(/\bData e horário para montagem dos equipamentos\s*:{1,2}\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-Z\s]+:{1,2}|$)/i);
-    const desejaMontagem = extractValue(/\bDeseja montagem dos equipamentos emprestados\?\s*:{1,2}\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-Z\s]+:{1,2}|$)/i);
+    const equipamentos1 = extractValue('Marque os itens necessários');
+    const equipamentos2 = extractValue('Descreva detalhadamente');
+    let equipamento = equipamentos1;
+    if (equipamentos2) equipamento += ` - Detalhes: ${equipamentos2}`;
 
-    // Combina múltiplos campos para obter uma descrição completa dos equipamentos
-    const equipamentos1 = extractValue(/\bMarque os itens necessários\s*:{1,2}\s*([\s\S]*?)(?=\n\s*\d+\)|\n\n|\n[A-ZÀ-Ú\s/]+:{1,2}|$)/i);
-    const equipamentos2 = extractValue(/\bDescreva detalhadamente\s*:{1,2}\s*([\s\S]*?)(?=\n\n\w|Logística de Empréstimo|$)/i);
-    const equipamento = `${equipamentos1}. Detalhes: ${equipamentos2}`.trim();
+    const retiradaDataHora = extractDateTime('Data e horário da retirada na Secom');
+    const devolucaoDataHora = extractDateTime('Data e horário da devoluç[ãa]o na Secom');
+    const desejaMontagem = extractValue('Deseja montagem dos equipamentos emprestados\\?');
+    const montagemDataHora = extractDateTime('Data e horário para montagem dos equipamentos');
 
     // Combina informações relevantes no campo de observações
-    const infoGeraisEvento = extractValue(/\bInformaç[oõ]es gerais sobre o evento\s*:{1,2}\s*([\s\S]*?)(?=\n\w+\s*:{1,2}|$)/i);
-    const obsFinais = extractValue(/\bObservaç[oõ]es gerais\s*:{1,2}\s*([\s\S]*?)(?=\n\d+\)|\n\w+\s*:{1,2}|$)/i);
-    const observacoes = `Info Evento: ${infoGeraisEvento}\nObs Finais: ${obsFinais}`.trim();
+    const infoGeraisEvento = extractValue('Informações gerais sobre o evento.*');
+    const obsFinais = extractValue('Observações gerais');
+    
+    let observacoes = '';
+    if (infoGeraisEvento) observacoes += `Info Evento: ${infoGeraisEvento}\n`;
+    if (obsFinais) observacoes += `Obs Finais: ${obsFinais}`;
 
     return {
         eventoNome,
-        equipamento,
+        equipamento: equipamento.trim(),
         responsavel,
         unidade,
         siape,

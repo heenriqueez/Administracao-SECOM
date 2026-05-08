@@ -2,7 +2,10 @@
 
 // Declara a variável 'user' no escopo global para que os scripts das páginas possam acessá-la.
 // Tenta obter o usuário do localStorage (persistente) primeiro, depois do sessionStorage.
-let user = JSON.parse(localStorage.getItem('user')) || JSON.parse(sessionStorage.getItem('user'));
+function getUserFromStorage() {
+    return JSON.parse(localStorage.getItem('user')) || JSON.parse(sessionStorage.getItem('user'));
+}
+let user = getUserFromStorage();
 let currentEmbedUrl = ''; // Variável global para a URL de embed
 let copyLinkBtn = null; // Variável global para o botão de copiar link
 
@@ -19,7 +22,7 @@ function handleLogout(e) {
 }
 
 function updateHeader() {
-    const user = JSON.parse(localStorage.getItem('user')) || JSON.parse(sessionStorage.getItem('user'));
+    const user = getUserFromStorage();
     // Se não houver usuário, não faz nada no cabeçalho/rodapé
     if (!user) return;
 
@@ -143,7 +146,7 @@ function updateUserInStorage(updatedUser) {
  * @returns {Promise<object>} - A resposta JSON do servidor.
  */
 function callApi(action, data = {}) {
-    const user = JSON.parse(sessionStorage.getItem('user')) || {};
+    const user = getUserFromStorage() || {};
     const loadingOverlay = document.getElementById('loading-overlay');
     const requestBody = { action, userRole: user.role, userEmail: user.email, ...data };
 
@@ -255,8 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const userPermissions = permissions[user.role] || [];
 
     // --- ATUALIZAÇÃO DA INTERFACE COM DADOS DO USUÁRIO ---
-    const mainHeaderTitle = document.querySelector('.main-header h1');
-    const sidebarNav = document.querySelector('.sidebar-nav');
+    // Variáveis não utilizadas foram removidas para manter o código limpo
 
     updateHeader();
 
